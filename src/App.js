@@ -45,7 +45,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Twenty Questions</p>
+        <p>Twenty Questions Online</p>
         <label htmlFor="question-input">Your Question:</label>
         <input
           id="question-input"
