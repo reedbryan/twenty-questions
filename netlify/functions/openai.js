@@ -1,4 +1,3 @@
-// filepath: /Users/reedbryan/Documents/WebDev/react/twenty-questions/netlify/functions/openai.js
 const { OpenAI } = require('openai');
 
 exports.handler = async (event) => {
@@ -8,6 +7,14 @@ exports.handler = async (event) => {
     return {
       statusCode: 400,
       body: JSON.stringify({ error: 'User input is required' }),
+    };
+  }
+
+  // Check if the API key is available
+  if (!process.env.OPENAI_API_KEY) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'The OPENAI_API_KEY environment variable is missing or empty.' }),
     };
   }
 
@@ -30,7 +37,7 @@ exports.handler = async (event) => {
     console.error('Error calling OpenAI API:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to fetch response from OpenAI' }),
+      body: JSON.stringify({ error: 'Failed to fetch response from OpenAI.' }),
     };
   }
 };
