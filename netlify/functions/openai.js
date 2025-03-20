@@ -24,7 +24,7 @@ exports.handler = async (event) => {
     });
 
     const completion = await openai.chat.completions.create({
-      model: 'o3-mini-2025-01-31',
+      model: 'o3-mini',
       messages: [{ role: 'user', content: userInput }],
       max_tokens: 100,
     });
