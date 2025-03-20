@@ -17,24 +17,27 @@ function App() {
       alert('Please enter a question.');
       return;
     }
-
+  
     try {
-      const openai = new OpenAI({
-        apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+      const response = await fetch('/.netlify/functions/openai', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userInput }),
       });
-
-      const completion = await openai.chat.completions.create({
-        model: 'GPT-4o mini',
-        messages: [{ role: 'user', content: userInput }],
-        max_tokens: 100,
-      });
-
-      setResponse(completion.choices[0].message.content.trim());
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch response from the server');
+      }
+  
+      const data = await response.json();
+      setResponse(data.response);
     } catch (error) {
-      console.error('Error calling OpenAI API:', error);
-      alert('Failed to fetch response from OpenAI.');
+      console.error('Error:', error);
+      alert('Failed to fetch response from the server.');
     }
-
+  
     setUserInput(''); // Clear the input field after submission
   };
 
