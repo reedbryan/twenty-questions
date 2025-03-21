@@ -19,6 +19,7 @@ function App() {
         try {
             const aiResponse = await fetchAIResponse(formattedPrompt); // Fetch the AI response
             setCurrentWord(aiResponse); // Update currentWord state
+            setAnswer("Ive thought of a word. Try and guess...");
             console.log("Generated word: " + aiResponse);
         } catch (error) {
             console.error('Error:', error);
@@ -43,6 +44,7 @@ function App() {
             if (aiResponse.includes(currentWord)) {
                 console.log("Game over");
                 sendInitialPrompt(); // Generate a new word
+                setAnswer(aiResponse + " Coming up with a new word...");
             }
         } catch (error) {
             console.error('Error:', error);
