@@ -13,6 +13,32 @@ function App() {
         setQuestion(event.target.value);
     };
 
+    // Function to send the "generate a 20 questions word" prompt
+    const sendInitialPrompt = async () => {
+        const formattedPrompt = formatInitial(); // Format the prompt
+
+        try {
+            const response = await fetch('/.netlify/functions/openai', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userInput: formattedPrompt }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch response from the server');
+            }
+
+            const data = await response.json();
+            setCurrentWord(data.response); // Update currentWord state
+            console.log("Generated word: " + data.response);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to fetch response from the server.');
+        }
+    };
+
     // Function to handle question submission
     const handleSubmit = async () => {
         if (!question.trim()) {
@@ -37,6 +63,13 @@ function App() {
     
             const data = await response.json();
             setAnswer(data.response);
+
+            // Check for a correct guess
+            if (data.response === "Yes! The word I was thinking of was " + currentWord + ".") {
+                console.log("Game over");
+                sendInitialPrompt(); // Generate a new word
+            }
+
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to fetch response from the server.');
@@ -45,34 +78,8 @@ function App() {
         setQuestion(''); // Clear the input field after submission
     };
 
-    // Function to send the "generate a 20 questions word" prompt when the app loads
+    // Send the initial "generate a word" prompt when the app loads
     useEffect(() => {
-        const sendInitialPrompt = async () => {
-            
-            const formattedPrompt = formatInitial(); // Format the prompt
-
-            try {
-                const response = await fetch('/.netlify/functions/openai', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ userInput: formattedPrompt }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch response from the server');
-                }
-
-                const data = await response.json();
-                setCurrentWord(data.response); // Update currentWord state
-                console.log("generated word: " + data.response);
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to fetch response from the server.');
-            }
-        };
-
         sendInitialPrompt();
     }, []); // Empty dependency array ensures this runs only once when the component mounts
 
