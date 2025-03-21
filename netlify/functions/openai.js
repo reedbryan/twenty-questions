@@ -29,8 +29,8 @@ exports.handler = async (event) => {
       max_completion_tokens: 100,
     });
     
-    console.log("Line 32: " + JSON.stringify(response));
-    console.log("Line 33: " +JSON.stringify({ response: completion.choices[0].message.content.trim() }));
+    console.log("Line 32: " + JSON.stringify(completion));
+    console.log("Line 33: " +JSON.stringify(completion.choices[0].message.content.trim()));
 
     return {
       statusCode: 200,
