@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
-import { formatPrompt } from 'prompt.js';
+import { formatPrompt } from './prompt.js';
 
 function App() {
     const [question, setQuestion] = useState('');
