@@ -57,7 +57,7 @@ function App() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ userInput: initialPrompt }),
+                    body: JSON.stringify({ userInput: formattedPrompt }),
                 });
 
                 if (!response.ok) {
