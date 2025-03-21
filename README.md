@@ -1,3 +1,48 @@
+# Twenty Questions Online
+
+## Testing chat
+[Convo #1](https://chatgpt.com/share/67ddade0-65ec-800b-b86c-bf9f91d6f78b)
+
+### Find word
+Ask chat to generate a word for twenty questions.
+
+### Prompting
+#### **Version 1**
+```md
+Answer the question listed below like you are being asked questions in a game of twenty questions where your word is "_____". Answer based on the following rules:
+1. Provide only yes or no answers
+2. If the question does not have a reasonable yes or no answer or does not relate to the game. Respond with: "You question must have a yes or no answer, please ask another".
+
+Question: "_________?"
+```
+[Testing](https://chatgpt.com/share/67ddb6b8-178c-800b-84ee-e2238b7d03b8) with random words and questions, searching for flaws and checking certain senarios.
+
+### **Version 2**
+Have the AI go through a checklist with the correct responses to certain types of input.
+```md
+Answer the question listed below like you are being asked questions in a game of twenty questions where your word is "_____". Beforer answering, go through the following checks one at a time and in order 1 to 2:
+1. If the question does not have a reasonable yes or no answer or does not relate to the game. Respond with: "You question must have a yes or no answer, please ask another".
+2. If the question references the word itself. Respond with a yes/no followed by a hint that they are getting close.
+
+Question: "_________?"
+```
+[Testing](https://chatgpt.com/share/67ddcfbb-7428-800b-9fde-a7f53b0c90b7) with random words and questions, searching for flaws and checking certain senarios.
+Problem with rule 2. I ask if it is the word and it says "yes, your getting very close now!". Lol.
+
+### **Version 3**
+Small edits to check #2.
+```md
+Answer the question listed below like you are being asked questions in a game of twenty questions where your word is "_____". Before answering, go through the following checks one at a time and in order 1 to 3:
+1. If the question does not have a reasonable yes or no answer or does not relate to the game. Respond with: "You question must have a yes or no answer, please ask another".
+2. If the question references the word itself and is not guessing the word outright. Respond with a yes/no followed by a hint that they are getting close.
+3. If the question guesses the word, using phasing along the lines of "is it x?" (where x is the word). Then Respond with "Yes! The word I was thinking of was x."
+
+Question: "_________?"
+```
+[Testing](https://chatgpt.com/share/67ddd32c-e920-800b-88ea-7c040bcba3f6) with random words and questions, searching for flaws and checking certain senarios.
+Problem with rule 2. I ask if it is the word and it says "yes, your getting very close now!". Lol.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
