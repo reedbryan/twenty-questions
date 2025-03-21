@@ -69,11 +69,10 @@ function App() {
 
     return (
         <div className="App">
-            <header className="App-header">
+            <header className="App-header">                
                 <img src={logo} className="App-logo" alt="logo" />
-                <p>Twenty Questions Online</p>
-                <label htmlFor="question-input">Your Question:</label>
-                <input
+                <h1>Twenty Questions Online</h1>
+\                <input
                     id="question-input"
                     type="text"
                     placeholder="Type your question here"
@@ -87,7 +86,6 @@ function App() {
                 {loading && <p>Loading...</p>} {/* Display loading message */}
                 {answer && !loading && ( // Only show answer when not loading
                     <div>
-                        <h3>Response:</h3>
                         <p>{answer}</p>
                     </div>
                 )}
