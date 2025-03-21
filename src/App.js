@@ -41,7 +41,7 @@ function App() {
             setAnswer(aiResponse); // Update the answer state
 
             // Check for a correct guess
-            if (aiResponse.includes(currentWord)) {
+            if (aiResponse.toLowerCase().includes(currentWord.toLowerCase())) {
                 console.log("Game over");
                 sendInitialPrompt(); // Generate a new word
                 setAnswer(aiResponse + " Coming up with a new word...");
