@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect } from 'react';import { formatQuestion, formatInitial, fetchAIResponse } from './prompt.js';
+import { useState, useEffect } from 'react';
+import { formatQuestion, formatInitial, fetchAIResponse } from './prompt.js';
 
 function App() {
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
     const [currentWord, setCurrentWord] = useState('');
+    const [loading, setLoading] = useState(false); // Add loading state
 
     // Function to handle user input changes
     const handleInputChange = (event) => {
@@ -16,6 +18,7 @@ function App() {
     const sendInitialPrompt = async () => {
         const formattedPrompt = formatInitial(); // Format the initial prompt
 
+        setLoading(true); // Start loading
         try {
             const aiResponse = await fetchAIResponse(formattedPrompt); // Fetch the AI response
             setCurrentWord(aiResponse); // Update currentWord state
@@ -24,6 +27,8 @@ function App() {
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to fetch response from the server.');
+        } finally {
+            setLoading(false); // Stop loading
         }
     };
 
@@ -35,7 +40,8 @@ function App() {
         }
     
         const formattedPrompt = formatQuestion(question, currentWord); // Format the prompt
-    
+
+        setLoading(true); // Start loading
         try {
             const aiResponse = await fetchAIResponse(formattedPrompt); // Fetch the AI response
             setAnswer(aiResponse); // Update the answer state
@@ -49,6 +55,8 @@ function App() {
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to fetch response from the server.');
+        } finally {
+            setLoading(false); // Stop loading
         }
     
         setQuestion(''); // Clear the input field after submission
@@ -71,9 +79,13 @@ function App() {
                     placeholder="Type your question here"
                     value={question}
                     onChange={handleInputChange}
+                    disabled={loading} // Disable input while loading
                 />
-                <button onClick={handleSubmit}>Submit Question</button>
-                {answer && (
+                <button onClick={handleSubmit} disabled={loading}> {/* Disable button while loading */}
+                    {loading ? 'Loading...' : 'Submit Question'}
+                </button>
+                {loading && <p>Loading...</p>} {/* Display loading message */}
+                {answer && !loading && ( // Only show answer when not loading
                     <div>
                         <h3>Response:</h3>
                         <p>{answer}</p>
