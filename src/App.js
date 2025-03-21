@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
-import { formatPrompt } from './prompt.js';
+import { formatQuestion, formatInitial } from './prompt.js';
 
 function App() {
     const [question, setQuestion] = useState('');
@@ -20,7 +20,7 @@ function App() {
             return;
         }
     
-        const formattedPrompt = formatPrompt(question, currentWord); // Format the prompt
+        const formattedPrompt = formatQuestion(question, currentWord); // Format the prompt
     
         try {
             const response = await fetch('/.netlify/functions/openai', {
@@ -48,7 +48,8 @@ function App() {
     // Function to send the "generate a 20 questions word" prompt when the app loads
     useEffect(() => {
         const sendInitialPrompt = async () => {
-            const initialPrompt = 'Generate a word for a game of 20 questions.';
+            
+            const formattedPrompt = formatInitial(); // Format the prompt
 
             try {
                 const response = await fetch('/.netlify/functions/openai', {
