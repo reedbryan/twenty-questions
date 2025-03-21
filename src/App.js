@@ -22,7 +22,7 @@ function App() {
         try {
             const aiResponse = await fetchAIResponse(formattedPrompt); // Fetch the AI response
             setCurrentWord(aiResponse); // Update currentWord state
-            setAnswer("Ive thought of a word. Try and guess...");
+            setAnswer("Ive thought of a word. Ask me questions to try and guess it.");
             console.log("Generated word: " + aiResponse);
         } catch (error) {
             console.error('Error:', error);
