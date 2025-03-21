@@ -32,6 +32,7 @@ function App() {
   
       const data = await response.json();
       setResponse(data.response);
+      console.log(data.response);
     } catch (error) {
       console.error('Error:', error);
       alert('Failed to fetch response from the server.');
