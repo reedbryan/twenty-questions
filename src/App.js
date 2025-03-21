@@ -65,7 +65,7 @@ function App() {
             setAnswer(data.response);
 
             // Check for a correct guess
-            if (data.response === "Yes! The word I was thinking of was " + currentWord + ".") {
+            if (data.response.includes(currentWord)) {
                 console.log("Game over");
                 sendInitialPrompt(); // Generate a new word
             }
