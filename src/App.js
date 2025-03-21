@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect } from 'react';
-import { formatQuestion, formatInitial } from './prompt.js';
+import { useState, useEffect } from 'react';import { formatQuestion, formatInitial, fetchAIResponse } from './prompt.js';
 
 function App() {
     const [question, setQuestion] = useState('');
@@ -15,24 +14,12 @@ function App() {
 
     // Function to send the "generate a 20 questions word" prompt
     const sendInitialPrompt = async () => {
-        const formattedPrompt = formatInitial(); // Format the prompt
+        const formattedPrompt = formatInitial(); // Format the initial prompt
 
         try {
-            const response = await fetch('/.netlify/functions/openai', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ userInput: formattedPrompt }),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch response from the server');
-            }
-
-            const data = await response.json();
-            setCurrentWord(data.response); // Update currentWord state
-            console.log("Generated word: " + data.response);
+            const aiResponse = await fetchAIResponse(formattedPrompt); // Fetch the AI response
+            setCurrentWord(aiResponse); // Update currentWord state
+            console.log("Generated word: " + aiResponse);
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to fetch response from the server.');
@@ -49,27 +36,14 @@ function App() {
         const formattedPrompt = formatQuestion(question, currentWord); // Format the prompt
     
         try {
-            const response = await fetch('/.netlify/functions/openai', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ userInput: formattedPrompt }), // Send the formatted prompt
-            });
-    
-            if (!response.ok) {
-                throw new Error('Failed to fetch response from the server');
-            }
-    
-            const data = await response.json();
-            setAnswer(data.response);
+            const aiResponse = await fetchAIResponse(formattedPrompt); // Fetch the AI response
+            setAnswer(aiResponse); // Update the answer state
 
             // Check for a correct guess
-            if (data.response.includes(currentWord)) {
+            if (aiResponse.includes(currentWord)) {
                 console.log("Game over");
                 sendInitialPrompt(); // Generate a new word
             }
-
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to fetch response from the server.');
