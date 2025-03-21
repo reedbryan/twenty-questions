@@ -26,10 +26,11 @@ exports.handler = async (event) => {
     const completion = await openai.chat.completions.create({
       model: 'o1-mini-2024-09-12',
       messages: [{ role: 'user', content: userInput }],
-      max_completion_tokens: 100,
+      max_completion_tokens: 10000,
     });
     
     console.log("Line 32: " + JSON.stringify(completion));
+    console.log("Line 32: " + JSON.stringify(completion.usage[2]));
     console.log("Line 33: " +JSON.stringify(completion.choices[0].message.content.trim()));
 
     return {
