@@ -71,8 +71,8 @@ function App() {
         <div className="App">
             <header className="App-header">                
                 <img src={logo} className="App-logo" alt="logo" />
-                <h1>Twenty Questions Online</h1>
-\                <input
+                <h2>Twenty Questions Online</h2>
+                <input
                     id="question-input"
                     type="text"
                     placeholder="Type your question here"
