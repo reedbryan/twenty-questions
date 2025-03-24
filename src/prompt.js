@@ -8,7 +8,7 @@ export const formatQuestion = (userInput, currentWord) => {
     2. If the question does not have a reasonable yes or no answer or does not relate to the game, respond with: "Your question must have a yes or no answer, please ask another."
     3. If the question references the word itself and is not guessing the word outright, respond with a yes/no followed by a hint that they are getting close.
     4. If the question guesses the word, using phrasing along the lines of "is it x?" (where x is the word), then respond with EXACTLY: "Yes! The word I was thinking of was x."
-    5. If none of the above apply, respond with only a yes/no followed by the initial question. Example: Question: "is it alive" "Yes. It is alive."
+    5. If none of the above apply, respond with only a yes/no followed by the initial question. Example: Question: "is it alive" Responses: "Yes. It is alive.", "No. It is not alive."
     `;
     
     return `Answer the question listed below like you are being asked questions in a game of twenty questions where your word is "${currentWord}". Before answering, go through the following checks one at a time and in order:

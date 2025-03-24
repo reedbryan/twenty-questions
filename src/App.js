@@ -7,7 +7,8 @@ function App() {
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
     const [currentWord, setCurrentWord] = useState('');
-    const [loading, setLoading] = useState(false); // Add loading state
+    const [loading, setLoading] = useState(false);
+    
 
     // Function to handle user input changes
     const handleInputChange = (event) => {
@@ -70,25 +71,33 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">                
+                
                 <img src={logo} className="App-logo" alt="logo" />
+                
+                
                 <h2>Twenty Questions Online</h2>
+                
+                
                 <input
                     id="question-input"
                     type="text"
                     placeholder="Type your question here"
                     value={question}
                     onChange={handleInputChange}
+                    onKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                            handleSubmit(); // Call handleSubmit when Enter is pressed
+                        }
+                    }}
                     disabled={loading} // Disable input while loading
                 />
-                <button onClick={handleSubmit} disabled={loading}> {/* Disable button while loading */}
-                    {loading ? 'Loading...' : 'Submit Question'}
-                </button>
-                {loading && <p>Loading...</p>} {/* Display loading message */}
+                {loading && <p>Thinking...</p>} {/* Display loading message */}
                 {answer && !loading && ( // Only show answer when not loading
                     <div>
                         <p>{answer}</p>
                     </div>
                 )}
+
             </header>
         </div>
     );
