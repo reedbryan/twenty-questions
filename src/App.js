@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import { formatQuestion, formatInitial, fetchAIResponse } from './prompt.js';
 
 function App() {
-    const [question, setQuestion] = useState('');
-    const [answer, setAnswer] = useState('');
-    const [currentWord, setCurrentWord] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [question, setQuestion] = useState('');          // Track user input (questions)
+    const [answer, setAnswer] = useState('');              // Track AI's responses
+    const [currentWord, setCurrentWord] = useState('');    // Track the current word being guessed
+    const [loading, setLoading] = useState(false);         // Track loading state (true when waiting for AI response)
+    const [questionCount, setQuestionCount] = useState(0); // Track the number of questions asked
+    const [questionLog, setQuestionLog] = useState([]);    // Log of past questions and answers
     
 
     // Function to handle user input changes
@@ -21,10 +23,18 @@ function App() {
 
         setLoading(true); // Start loading
         try {
-            const aiResponse = await fetchAIResponse(formattedPrompt); // Fetch the AI response
-            setCurrentWord(aiResponse); // Update currentWord state
-            setAnswer("Ive thought of a word. Ask me questions to try and guess it.");
-            console.log("Generated word: " + aiResponse);
+            // Fetch the AI response
+            const aiResponse = await fetchAIResponse(formattedPrompt);
+            
+            // Update currentWord state with the generated word & Update the answer state with an appropriate message
+            setCurrentWord(aiResponse);
+            setAnswer("I've thought of a word. Ask me questions to try and guess it.");
+            
+            // Reset question count & Clear the question log
+            setQuestionCount(0); 
+            setQuestionLog([]); 
+            
+            console.log("Generated word: " + aiResponse); // DEBUG
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to fetch response from the server.');
@@ -44,8 +54,13 @@ function App() {
 
         setLoading(true); // Start loading
         try {
-            const aiResponse = await fetchAIResponse(formattedPrompt); // Fetch the AI response
-            setAnswer(aiResponse); // Update the answer state
+            // Fetch the AI response & Update the answer state
+            const aiResponse = await fetchAIResponse(formattedPrompt);
+            setAnswer(aiResponse);
+
+            // Update question count and log
+            setQuestionCount((prevCount) => prevCount + 1); // Increment question count
+            setQuestionLog((prevLog) => [...prevLog, { question, answer: aiResponse }]); // Add to log
 
             // Check for a correct guess
             if (aiResponse.toLowerCase().includes(currentWord.toLowerCase())) {
@@ -72,6 +87,7 @@ function App() {
         <div className="App">
             <header className="App-header">                
                 
+
                 <img src={logo} className="App-logo" alt="logo" />
                 
                 
@@ -97,6 +113,21 @@ function App() {
                         <p>{answer}</p>
                     </div>
                 )}
+
+
+                <div>
+                    <h3>Questions Asked: {questionCount}</h3> {/* Display question count */}
+                    <h3>Question Log:</h3>
+                    <ul>
+                        {questionLog.map((entry, index) => (
+                            <li key={index}>
+                                <strong>Q:</strong> {entry.question} <br />
+                                <strong>A:</strong> {entry.answer}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
 
             </header>
         </div>
