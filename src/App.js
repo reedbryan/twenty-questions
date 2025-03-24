@@ -10,7 +10,7 @@ function App() {
     const [loading, setLoading] = useState(false);         // Track loading state (true when waiting for AI response)
     const [questionCount, setQuestionCount] = useState(0); // Track the number of questions asked
     const [questionLog, setQuestionLog] = useState([]);    // Log of past questions and answers
-    
+    const [gameOver, setGameOver] = useState(false);       // Track game state (true when the word has been guessed)
 
     // Function to handle user input changes
     const handleInputChange = (event) => {
@@ -19,6 +19,7 @@ function App() {
 
     // Function to send the "generate a 20 questions word" prompt
     const sendInitialPrompt = async () => {
+        
         const formattedPrompt = formatInitial(); // Format the initial prompt
 
         setLoading(true); // Start loading
@@ -30,11 +31,13 @@ function App() {
             setCurrentWord(aiResponse);
             setAnswer("I've thought of a word. Ask me questions to try and guess it.");
             
-            // Reset question count & Clear the question log
+            // Reset states
             setQuestionCount(0); 
             setQuestionLog([]); 
+            setGameOver(false);
             
-            console.log("Generated word: " + aiResponse); // DEBUG
+            // DEBUG
+            console.log("Generated word: " + aiResponse);
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to fetch response from the server.');
@@ -65,8 +68,7 @@ function App() {
             // Check for a correct guess
             if (aiResponse.toLowerCase().includes(currentWord.toLowerCase())) {
                 console.log("Game over");
-                sendInitialPrompt(); // Generate a new word
-                setAnswer(aiResponse + " Coming up with a new word...");
+                setGameOver(true); // Set gameOver to true
             }
         } catch (error) {
             console.error('Error:', error);
@@ -77,6 +79,11 @@ function App() {
     
         setQuestion(''); // Clear the input field after submission
     };
+
+    const restartGame = () => {
+        sendInitialPrompt(); // Generate a new word
+        setAnswer(aiResponse + " Coming up with a new word...");
+    }
 
     // Send the initial "generate a word" prompt when the app loads
     useEffect(() => {
@@ -105,12 +112,20 @@ function App() {
                             handleSubmit(); // Call handleSubmit when Enter is pressed
                         }
                     }}
-                    disabled={loading} // Disable input while loading
+                    disabled={loading || gameOver} // Disable input while loading
                 />
                 {loading && <p>Thinking...</p>} {/* Display loading message */}
                 {answer && !loading && ( // Only show answer when not loading
                     <div>
                         <p>{answer}</p>
+                    </div>
+                )}
+
+
+                {gameOver && ( // Display restart button when game is over
+                    <div>
+                        <p>Game Over! The word was "{currentWord}".</p>
+                        <button onClick={restartGame}>Restart Game</button>
                     </div>
                 )}
 
