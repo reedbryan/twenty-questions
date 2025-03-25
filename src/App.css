@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   background-color: #282c34;
+  
 }
 
 .App-header {
@@ -14,7 +15,6 @@
 }
 
 .App-body {
-    min-height: 90vh;
     padding: 50px;
     display: flex;
     flex-direction: column;
@@ -45,11 +45,12 @@
 
 .chat {
     display: flex;
+    min-height: 65vh;
     flex-direction: column; /* Stack messages vertically */
     gap: 10px; /* Add spacing between messages */
+    overflow-y: auto; /* Make the chat scrollable when content overflows */
     width: 100%;
-    max-width: 600px; /* Optional: Limit the width of the chat area */
-    margin: 20px auto; /* Center the chat area horizontally */
+    margin: auto; /* Center the chat area horizontally */
 }
 .message-container {
     width: 100%;
