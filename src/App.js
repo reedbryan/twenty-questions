@@ -1,4 +1,6 @@
-import logo from './logo.svg';
+import git_logo from './logos/logo-github.svg';
+import react_logo from './logos/logo-react.svg';
+import openAI_logo from './logos/logo-openai.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 import { formatQuestion, formatInitial, fetchAIResponse } from './prompt.js';
@@ -8,7 +10,7 @@ function App() {
     const [answer, setAnswer] = useState('');              // Track AI's responses
     const [currentWord, setCurrentWord] = useState('');    // Track the current word being guessed
     const [loading, setLoading] = useState(false);         // Track loading state (true when waiting for AI response)
-    const [questionCount, setQuestionCount] = useState(0); // Track the number of questions asked
+    const [questionCount, setQuestionCount] = useState(20); // Track the number of questions asked
     const [questionLog, setQuestionLog] = useState([]);    // Log of past questions and answers
     const [gameOver, setGameOver] = useState(false);       // Track game state (true when the word has been guessed)
 
@@ -32,7 +34,7 @@ function App() {
             setAnswer("I've thought of a word. Ask me questions to try and guess it.");
             
             // Reset states
-            setQuestionCount(0); 
+            setQuestionCount(20); 
             setQuestionLog([]); 
             setGameOver(false);
             
@@ -62,14 +64,20 @@ function App() {
             setAnswer(aiResponse);
 
             // Update question count and log
-            setQuestionCount((prevCount) => prevCount + 1); // Increment question count
+            setQuestionCount((prevCount) => prevCount - 1); // Increment question count
             setQuestionLog((prevLog) => [...prevLog, { question, answer: aiResponse }]); // Add to log
 
             // Check for a correct guess
             if (aiResponse.toLowerCase().includes(currentWord.toLowerCase())) {
-                console.log("Game over");
+                console.log("Game over, correct guess");
                 setGameOver(true); // Set gameOver to true
             }
+            // Check for 20 questions asked
+            if (questionCount <= 0) {
+                console.log("Game over, 20 questions asked");
+                setGameOver(true); // Set gameOver to true
+            }
+
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to fetch response from the server.');
@@ -87,33 +95,31 @@ function App() {
 
     // Send the initial "generate a word" prompt when the app loads
     useEffect(() => {
-        sendInitialPrompt();
+        //sendInitialPrompt();
     }, []); // Empty dependency array ensures this runs only once when the component mounts
 
     return (
         <div className="App">
             <header className="App-header">                
-                
 
-                <img src={logo} className="App-logo" alt="logo" />
+                <h1>20 QUESTIONS ONLINE</h1>
                 
-                
-                <h2>Twenty Questions Online</h2>
-                
-                
-                <input
-                    id="question-input"
-                    type="text"
-                    placeholder="Type your question here"
-                    value={question}
-                    onChange={handleInputChange}
-                    onKeyDown={(event) => {
-                        if (event.key === 'Enter') {
-                            handleSubmit(); // Call handleSubmit when Enter is pressed
-                        }
-                    }}
-                    disabled={loading || gameOver} // Disable input while loading
-                />
+                <div className="App-logos">
+                    <a href="https://github.com/reedbryan/twenty-questions" target="_blank" rel="noopener noreferrer">
+                        <img src={git_logo} className="logo github" alt="GitHub Logo" />
+                    </a>
+                    <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+                        <img src={react_logo} className="logo" alt="React Logo" />
+                    </a>
+                    <a href="https://openai.com" target="_blank" rel="noopener noreferrer">
+                        <img src={openAI_logo} className="logo" alt="OpenAI Logo" />
+                    </a>
+                </div>
+
+            </header>
+
+            <div className="App-body">
+
                 {loading && <p>Thinking...</p>} {/* Display loading message */}
                 {answer && !loading && ( // Only show answer when not loading
                     <div>
@@ -129,22 +135,37 @@ function App() {
                     </div>
                 )}
 
+                <h3>Question Log:</h3>
+                <ul type="1">
+                    {questionLog.map((entry, index) => (
+                        <li key={index}>
+                            <strong>Q:</strong> {entry.question} <br />
+                            <strong>A:</strong> {entry.answer}
+                        </li>
+                    ))}
+                </ul>
 
-                <div>
-                    <h3>Questions Asked: {questionCount}</h3> {/* Display question count */}
-                    <h3>Question Log:</h3>
-                    <ul>
-                        {questionLog.map((entry, index) => (
-                            <li key={index}>
-                                <strong>Q:</strong> {entry.question} <br />
-                                <strong>A:</strong> {entry.answer}
-                            </li>
-                        ))}
-                    </ul>
+                <div className="input-bar">                    
+                    <button className="input-bar-button give-up">give up</button>
+                    <button className="input-bar-button submit" onClick={handleSubmit}>submit</button>
+                    <input
+                        className="input-bar-textbox"
+                        type="text"
+                        placeholder="Type your question here..."
+                        value={question}
+                        onChange={handleInputChange}
+                        onKeyDown={(event) => {
+                            if (event.key === 'Enter') {
+                                handleSubmit(); // Call handleSubmit when Enter is pressed
+                            }
+                        }}
+                        disabled={loading || gameOver} // Disable input while loading
+                    />
+                    <h3 className='input-bar-counter'>{questionCount}/20</h3> {/* Display question count */}
                 </div>
 
+            </div>
 
-            </header>
         </div>
     );
 }
