@@ -120,24 +120,6 @@ function App() {
 
             <div className="App-body">
 
-        
-                {gameOver && ( // Display restart button when game is over
-                    <div>
-                        <p>Game Over! The word was "{currentWord}".</p>
-                        <button onClick={restartGame}>Restart Game</button>
-                    </div>
-                )}
-
-                <h3>Question Log:</h3>
-                <ul type="1">
-                    {questionLog.map((entry, index) => (
-                        <li key={index}>
-                            <strong>Q:</strong> {entry.question} <br />
-                            <strong>A:</strong> {entry.answer}
-                        </li>
-                    ))}
-                </ul>
-
                 <div className="chat">
                     {questionLog.map((entry, index) => (
                         <div key={index} className="message-container">
@@ -151,13 +133,15 @@ function App() {
                             </div>
                         </div>
                     ))}
-                    {loading && <p>Thinking...</p>} {/* Display loading message */}
-                    {answer && !loading && ( // Only show answer when not loading
-                        <div>
-                            <p>{answer}</p>
-                        </div>
-                    )}
+                    <div className='loading-message'>{loading && <p>Thinking...</p>}</div>
                 </div>
+
+                {gameOver && ( // Display restart button when game is over
+                    <div>
+                        <p>Game Over! The word was "{currentWord}".</p>
+                        <button onClick={restartGame}>Restart Game</button>
+                    </div>
+                )}
 
                 <div className="input-bar">                    
                     <button className="input-bar-button give-up">give up</button>
