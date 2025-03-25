@@ -1,5 +1,4 @@
 # Twenty Questions Online
-#### By Reed Bryan
 
 A platform to play a game of twenty questions against AI. [Click to Play](https://twenty-questions-online.netlify.app/)
 
