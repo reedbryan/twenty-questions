@@ -20,7 +20,7 @@ function App() {
         if (chatRef.current) {
             chatRef.current.scrollTop = chatRef.current.scrollHeight;
         }
-    }, [chatLog]); // Run this effect whenever chatLog changes
+    }, [question, chatLog, gameOver, loading]); // Run this effect whenever these states change
     
     // Function to handle user input changes
     const handleInputChange = (event) => {
@@ -125,7 +125,7 @@ function App() {
 
             <div className="App-body">
 
-                <div className="chat">
+                <div className="chat" ref={chatRef}>
                     {chatLog.map((entry, index) => (
                         <div key={index} className="message-container">
                             {/* Question Bubble */}
