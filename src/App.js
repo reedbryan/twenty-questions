@@ -7,11 +7,10 @@ import { formatQuestion, formatInitial, fetchAIResponse } from './prompt.js';
 
 function App() {
     const [question, setQuestion] = useState('');          // Track user input (questions)
-    const [answer, setAnswer] = useState('');              // Track AI's responses
     const [currentWord, setCurrentWord] = useState('');    // Track the current word being guessed
     const [loading, setLoading] = useState(false);         // Track loading state (true when waiting for AI response)
     const [questionCount, setQuestionCount] = useState(20); // Track the number of questions asked
-    const [questionLog, setQuestionLog] = useState([]);    // Log of past questions and answers
+    const [chatLog, setChatLog] = useState([]);    // Log of past questions and answers
     const [gameOver, setGameOver] = useState(false);       // Track game state (true when the word has been guessed)
 
     // Function to handle user input changes
@@ -29,13 +28,10 @@ function App() {
             // Fetch the AI response
             const aiResponse = await fetchAIResponse(formattedPrompt);
             
-            // Update currentWord state with the generated word & Update the answer state with an appropriate message
+            // Update states
             setCurrentWord(aiResponse);
-            setAnswer("I've thought of a word. Ask me questions to try and guess it.");
-            
-            // Reset states
+            setChatLog({ question: null, answer: "I've thought of a word. Ask me questions to try and guess it."});
             setQuestionCount(20); 
-            setQuestionLog([]); 
             setGameOver(false);
             
             // DEBUG
@@ -61,11 +57,10 @@ function App() {
         try {
             // Fetch the AI response & Update the answer state
             const aiResponse = await fetchAIResponse(formattedPrompt);
-            setAnswer(aiResponse);
 
             // Update question count and log
             setQuestionCount((prevCount) => prevCount - 1); // Increment question count
-            setQuestionLog((prevLog) => [...prevLog, { question, answer: aiResponse }]); // Add to log
+            setChatLog((prevLog) => [...prevLog, { question, answer: aiResponse }]); // Add to log
 
             // Check for a correct guess
             if (aiResponse.toLowerCase().includes(currentWord.toLowerCase())) {
@@ -90,7 +85,6 @@ function App() {
 
     const restartGame = () => {
         sendInitialPrompt(); // Generate a new word
-        setAnswer("Coming up with a new word...");
     }
 
     // Send the initial "generate a word" prompt when the app loads
@@ -121,12 +115,14 @@ function App() {
             <div className="App-body">
 
                 <div className="chat">
-                    {questionLog.map((entry, index) => (
+                    {chatLog.map((entry, index) => (
                         <div key={index} className="message-container">
                             {/* Question Bubble */}
-                            <div className="message-bubble question">
-                                <strong>Q:</strong> {entry.question}
-                            </div>
+                            {entry.question && (
+                                <div className="message-bubble question">
+                                    <strong>Q:</strong> {entry.question}
+                                </div>
+                            )}
                             {/* Answer Bubble */}
                             <div className="message-bubble answer">
                                 <strong>A:</strong> {entry.answer}
