@@ -120,14 +120,7 @@ function App() {
 
             <div className="App-body">
 
-                {loading && <p>Thinking...</p>} {/* Display loading message */}
-                {answer && !loading && ( // Only show answer when not loading
-                    <div>
-                        <p>{answer}</p>
-                    </div>
-                )}
-
-
+        
                 {gameOver && ( // Display restart button when game is over
                     <div>
                         <p>Game Over! The word was "{currentWord}".</p>
@@ -144,6 +137,27 @@ function App() {
                         </li>
                     ))}
                 </ul>
+
+                <div className="chat">
+                    {questionLog.map((entry, index) => (
+                        <div key={index} className="message-container">
+                            {/* Question Bubble */}
+                            <div className="message-bubble question">
+                                <strong>Q:</strong> {entry.question}
+                            </div>
+                            {/* Answer Bubble */}
+                            <div className="message-bubble answer">
+                                <strong>A:</strong> {entry.answer}
+                            </div>
+                        </div>
+                    ))}
+                    {loading && <p>Thinking...</p>} {/* Display loading message */}
+                    {answer && !loading && ( // Only show answer when not loading
+                        <div>
+                            <p>{answer}</p>
+                        </div>
+                    )}
+                </div>
 
                 <div className="input-bar">                    
                     <button className="input-bar-button give-up">give up</button>

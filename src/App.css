@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #282c34;
 }
 
 .App-header {
@@ -12,10 +13,8 @@
     color: white;
 }
 
-
 .App-body {
-    background-color: #282c34;
-    /*min-height: 90vh;*/
+    min-height: 90vh;
     padding: 50px;
     display: flex;
     flex-direction: column;
@@ -25,6 +24,7 @@
     color: white;
 }
 .input-bar {
+    position: sticky;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -41,33 +41,37 @@
 .input-bar-counter {
     margin-left: 10px;
 }
-.question-input {
-    width: 90%;
-    height: 100px;
-    font-size: 23px;
-    padding: 10px;
-    text-align: left; /* Ensure normal text aligns to the left */
-    vertical-align: top; /* Align text to the top */
-}
-.question-input::placeholder {
-    text-align: left; /* Align placeholder text to the left */
-    vertical-align: top; /* Align placeholder text to the top */
-    padding: 0;
-    color: #aaa; /* Optional: Change placeholder text color */
-}
-.question-input-label{
-    font-size: 23px;
-    margin-bottom: 10px;
-}
-.questions-counter{
-    font-size: 23px;
-    margin-top: 10px;
-}
 
-.questionLog {
-    list-style-type: none;
-    list-style-position: outside;
 
+.chat {
+    display: flex;
+    flex-direction: column; /* Stack messages vertically */
+    gap: 10px; /* Add spacing between messages */
+    width: 100%;
+    max-width: 600px; /* Optional: Limit the width of the chat area */
+    margin: 20px auto; /* Center the chat area horizontally */
+}
+.message-container {
+    display: flex;
+    flex-direction: column; /* Stack question and answer vertically */
+    gap: 5px; /* Add spacing between question and answer */
+}
+.message-bubble {
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 70%; /* Limit the width of the bubbles */
+    word-wrap: break-word; /* Ensure long text wraps to the next line */
+    font-size: 16px;
+}
+.message-bubble.question {
+    align-self: flex-start; /* Align question bubbles to the left */
+    background-color: #f0f0f0; /* Light gray background for questions */
+    color: #333; /* Dark text color */
+}
+.message-bubble.answer {
+    align-self: flex-end; /* Align answer bubbles to the right */
+    background-color: #007bff; /* Blue background for answers */
+    color: white; /* White text color */
 }
 
 .App-logos {
