@@ -46,9 +46,10 @@
 .chat {
     display: flex;
     min-height: 65vh;
+    max-height: 65vh;
+    overflow-y: auto; /* Make the chat scrollable when content overflows */
     flex-direction: column; /* Stack messages vertically */
     gap: 10px; /* Add spacing between messages */
-    overflow-y: auto; /* Make the chat scrollable when content overflows */
     width: 100%;
     margin: auto; /* Center the chat area horizontally */
 }
@@ -63,7 +64,7 @@
     border-radius: 15px;
     max-width: 70%; /* Limit the width of the bubbles */
     word-wrap: break-word; /* Ensure long text wraps to the next line */
-    font-size: 16px;
+    font-size: calc(10px + 2vmin);
 }
 .message-bubble.question {
     align-self: flex-end; /* Align question bubbles to the left */
