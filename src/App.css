@@ -73,7 +73,7 @@
 }
 .message-bubble.answer {
     align-self: flex-start; /* Align answer bubbles to the right */
-    background-color: #007bff; /* Blue background for answers */
+    background-color: #151b24; /* Blue background for answers */
     color: white; /* White text color */
 }
 

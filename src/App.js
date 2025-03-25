@@ -2,17 +2,26 @@ import git_logo from './logos/logo-github.svg';
 import react_logo from './logos/logo-react.svg';
 import openAI_logo from './logos/logo-openai.svg';
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { formatQuestion, formatInitial, fetchAIResponse } from './prompt.js';
 
 function App() {
     const [question, setQuestion] = useState('');          // Track user input (questions)
     const [currentWord, setCurrentWord] = useState('');    // Track the current word being guessed
     const [loading, setLoading] = useState(false);         // Track loading state (true when waiting for AI response)
-    const [questionCount, setQuestionCount] = useState(20); // Track the number of questions asked
-    const [chatLog, setChatLog] = useState([]);    // Log of past questions and answers
+    const [questionCount, setQuestionCount] = useState(20);// Track the number of questions asked
+    const [chatLog, setChatLog] = useState([]);            // Log of past questions and answers
     const [gameOver, setGameOver] = useState(false);       // Track game state (true when the word has been guessed)
-
+    
+                            
+    // Scroll to the bottom whenever chatLog updates
+    const chatRef = useRef(null);  
+    useEffect(() => {
+        if (chatRef.current) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        }
+    }, [chatLog]); // Run this effect whenever chatLog changes
+    
     // Function to handle user input changes
     const handleInputChange = (event) => {
         setQuestion(event.target.value);
