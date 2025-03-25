@@ -1,13 +1,15 @@
 # Twenty Questions Online
 #### By Reed Bryan
 
+A platform to play a game of twenty questions against AI. [Click to Play](https://twenty-questions-online.netlify.app/)
+
 ## Table of Contents
-- [Testing Chat](#testing-chat)
-  - [Find Word](#find-word)
-  - [Prompting](#prompting)
+- [Prompting](#prompting)
+  - [Testing Chat](#testing-chat)
     - [Version 1](#version-1)
     - [Version 2](#version-2)
     - [Version 3](#version-3)
+  - [Find Word](#find-word)
 - [OpenAI API](#openai-api)
   - [Implementation](#implementation)
   - [Security](#security)
@@ -18,17 +20,14 @@
   - [Buttons and Input](#buttons-and-input)
   - [Game Over State](#game-over-state)
 
+## Prompting
+The prompts sent to the AI for formatted specifically for their purpose as questions in a game of twenty questions. The prompt inputs the user's question and the word they are trying to guess, including contraints for the AI to follow as well as options for what to respond with in special cases. These guidelines were formed through and iterative process, outlined below.
 
-## Testing chat
-[Convo #1](https://chatgpt.com/share/67ddade0-65ec-800b-b86c-bf9f91d6f78b)
-
-### Find word
-Ask chat to generate a word for twenty questions.
-
-### **Prompting**
-The prompts sent to the AI for formatted specifically for their purpose as questions in a game of twenty questions. The prompt includes contraints for the AI to follow and options for what to respond with in special cases. These guidelines were formed through and iterative process, outlined below.
+### **Testing chat**
+Very eary in developement, I decided  that I would use GPTo1-mini for this application given the price of API access for models like GPT4 or GPT3o-mini. Before implementing anything I wanted to ensure that o1-mini would be able to generate acceptable answers to questions. See [Inital testing convo](https://chatgpt.com/share/67ddade0-65ec-800b-b86c-bf9f91d6f78b) for my initial questions to o1-mini. I quickly found that o1-mini was up to the task so I next started testing out prompt structures to try and optimize the accuracy and coherence of the response.
 
 #### **Version 1**
+The first iteration of the prompt:
 ```md
 Answer the question listed below like you are being asked questions in a game of twenty questions where your word is "_____". Answer based on the following rules:
 1. Provide only yes or no answers
@@ -36,10 +35,10 @@ Answer the question listed below like you are being asked questions in a game of
 
 Question: "_________?"
 ```
-I tested this prompt with random words and questions, searching for flaws and checking certain senarios (See [Convo](https://chatgpt.com/share/67ddb6b8-178c-800b-84ee-e2238b7d03b8)).
+I tested this prompt with random words and questions, searching for flaws and checking certain senarios (See [V1 convo](https://chatgpt.com/share/67ddb6b8-178c-800b-84ee-e2238b7d03b8)).
 
 #### **Version 2**
-Have the AI go through a checklist with the correct responses to certain types of input.
+After analyzing the responses from V1 I changed the prompt, having the AI go through a checklist with the desired responses to different types of user input.
 ```md
 Answer the question listed below like you are being asked questions in a game of twenty questions where your word is "_____". Beforer answering, go through the following checks one at a time and in order 1 to 2:
 1. If the question does not have a reasonable yes or no answer or does not relate to the game. Respond with: "You question must have a yes or no answer, please ask another".
@@ -47,11 +46,10 @@ Answer the question listed below like you are being asked questions in a game of
 
 Question: "_________?"
 ```
-[Testing](https://chatgpt.com/share/67ddcfbb-7428-800b-9fde-a7f53b0c90b7) with random words and questions, searching for flaws and checking certain senarios.
-Problem with rule 2. I ask if it is the word and it says "yes, your getting very close now!". Lol.
+I found a problem with rule #2. I give it correct answer and instead of ending the game it says "yes, your getting very close now!". This is bad (See [V2 convo](https://chatgpt.com/share/67ddcfbb-7428-800b-9fde-a7f53b0c90b7)). 
 
 #### **Version 3**
-Small edits to check #2.
+Small edits to rule #2, addition of rule #3.
 ```md
 Answer the question listed below like you are being asked questions in a game of twenty questions where your word is "_____". Before answering, go through the following checks one at a time and in order 1 to 3:
 1. If the question does not have a reasonable yes or no answer or does not relate to the game. Respond with: "You question must have a yes or no answer, please ask another".
@@ -60,8 +58,30 @@ Answer the question listed below like you are being asked questions in a game of
 
 Question: "_________?"
 ```
-[Testing](https://chatgpt.com/share/67ddd32c-e920-800b-88ea-7c040bcba3f6) with random words and questions, searching for flaws and checking certain senarios.
-Problem with rule 2. I ask if it is the word and it says "yes, your getting very close now!".
+This verison works OK so I kept it for a the majority of development (See [V3 convo](https://chatgpt.com/share/67ddd32c-e920-800b-88ea-7c040bcba3f6)).
+
+#### **Version 4**
+After some development I added more contraints to problems I found and edited the prompt structure to fit with the [prompt.js](https://github.com/reedbryan/twenty-questions/blob/main/src/prompt.js) script that I use for formatting the message sent to the API. That version looked something like this:
+```js
+export const formatQuestion = (userInput, currentWord) => {
+    if (!userInput || !currentWord) {
+        throw new Error('Both userInput and currentWord are required to format the question.');
+    }
+    
+    const rules = `
+    1. If the question is not a question, respond with "That is not a question."
+    2. If the question does not have a reasonable yes or no answer or does not relate to the game, respond with: "Your question must have a yes or no answer, please ask another."
+    3. If the question references the word itself and is not guessing the word outright, respond with a yes/no followed by a hint that they are getting close.
+    4. If the question guesses the word, using phrasing along the lines of "is it x?" (where x is the word), then respond with EXACTLY: "Yes! The word I was thinking of was x."
+    5. If none of the above apply, respond with only a yes/no followed by the initial question. Example: Question: "is it alive" Responses: "Yes. It is alive.", "No. It is not alive."
+    `;
+    
+    return `Answer the question listed below like you are being asked questions in a game of twenty questions where your word is "${currentWord}". Before answering, go through the following checks one at a time and in order:
+    ${rules}
+    
+    Question: "${userInput}?"`;
+};
+```
 
 ## OpenAI API
 The OpenAI API is a powerful tool that enables this application to generate and answer questions for a game of twenty questions. It is implemented using Netlify's [serverless functions](https://docs.netlify.com/functions/overview/), ensuring secure and efficient communication with the API.
