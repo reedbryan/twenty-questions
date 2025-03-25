@@ -8,6 +8,7 @@ A platform to play a game of twenty questions against AI. [Click to Play](https:
     - [Version 1](#version-1)
     - [Version 2](#version-2)
     - [Version 3](#version-3)
+    - [Version 4](#version-4)
   - [Find Word](#find-word)
 - [OpenAI API](#openai-api)
   - [Implementation](#implementation)
@@ -89,7 +90,7 @@ The OpenAI API is a powerful tool that enables this application to generate and 
 The API key is stored an [environment variable](https://docs.netlify.com/environment-variables/overview/) hosted by Netlify. This ensures that the key is not exposed in the client-side code, making it a secure method for accessing the API in a server-side application.
 
 ### **Implementation**
-The API is accessed via the openai package in the openai.js file. The function takes user input, sends it to the OpenAI API, and returns the response. Here's an example of how the API is called:
+The API is accessed via the openai package in the [openai.js](https://github.com/reedbryan/twenty-questions/blob/main/netlify/functions/openai.js) file. The function takes user input, sends it to the OpenAI API, and returns the response. Here's an example of how the API is called:
 ```js
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
