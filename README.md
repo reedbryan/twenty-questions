@@ -2,6 +2,8 @@
 
 A platform to play a game of twenty questions against AI. [Click to Play](https://twenty-questions-online.netlify.app/)
 
+![Alt text](https://github.com/reedbryan/twenty-questions/blob/main/src/logos/FrontPageSC.png)
+
 ## Table of Contents
 - [Prompting](#prompting)
   - [Testing Chat](#testing-chat)
