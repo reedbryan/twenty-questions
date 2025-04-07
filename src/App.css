@@ -2,6 +2,8 @@
   text-align: center;
   background-color: #282c34;
   font-family: 'Poppins', sans-serif;
+  width: 100%;
+  height: 100%;
 }
 
 .App-header {
@@ -15,7 +17,6 @@
 }
 
 .App-body {
-    padding: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,8 +25,10 @@
     color: white;
 }
 .input-bar {
+    background-color: #151b24;
+    padding: 1%;
     position: sticky;
-    width: 100%;
+    width: 98%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,12 +51,12 @@
 
 .chat {
     display: flex;
+    padding: 50px;
     min-height: 65vh;
     max-height: 65vh;
     overflow-y: auto; /* Make the chat scrollable when content overflows */
     flex-direction: column; /* Stack messages vertically */
     gap: 10px; /* Add spacing between messages */
-    width: 100%;
     margin: auto; /* Center the chat area horizontally */
 }
 .message-container {

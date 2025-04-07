@@ -157,29 +157,33 @@ function App() {
                     <div className='loading-message'>{loading && <p>Thinking...</p>}</div>
                 </div>
 
-                {gameOver && ( // Display restart button when game is over
-                    <div>
-                        <button onClick={restartGame}>Restart Game</button>
-                    </div>
-                )}
-
-                <div className="input-bar">                    
-                    <button className="input-bar-button give-up" onClick={handleGiveUp}>give up</button>
-                    <button className="input-bar-button submit" onClick={handleSubmit}>submit</button>
-                    <input
-                        className="input-bar-textbox"
-                        type="text"
-                        placeholder="Type your question here..."
-                        value={question}
-                        onChange={handleInputChange}
-                        onKeyDown={(event) => {
-                            if (event.key === 'Enter') {
-                                handleSubmit(); // Call handleSubmit when Enter is pressed
-                            }
-                        }}
-                        disabled={loading || gameOver} // Disable input while loading
-                    />
-                    <h3 className='input-bar-counter'>{questionCount}/20</h3> {/* Display question count */}
+                <div className="input-bar">
+                    {gameOver ? (
+                        // Display restart button when game is over
+                        <div>
+                            <button onClick={restartGame}>Restart Game</button>
+                        </div>
+                    ) : (
+                        // Display input bar components when the game is not over
+                        <>
+                            <button className="input-bar-button give-up" onClick={handleGiveUp}>give up</button>
+                            <button className="input-bar-button submit" onClick={handleSubmit}>submit</button>
+                            <input
+                                className="input-bar-textbox"
+                                type="text"
+                                placeholder="Type your question here..."
+                                value={question}
+                                onChange={handleInputChange}
+                                onKeyDown={(event) => {
+                                    if (event.key === 'Enter') {
+                                        handleSubmit(); // Call handleSubmit when Enter is pressed
+                                    }
+                                }}
+                                disabled={loading} // Disable input while loading
+                            />
+                            <h3 className="input-bar-counter">{questionCount}/20</h3> {/* Display question count */}
+                        </>
+                    )}
                 </div>
 
             </div>
