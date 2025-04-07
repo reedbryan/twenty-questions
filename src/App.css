@@ -7,6 +7,7 @@
 }
 
 .App-header {
+    font-family: 'Poppins', sans-serif;
     display: flex; /* Enable flexbox layout */
     justify-content: space-between; /* Distribute items with space between them */
     align-items: center; /* Align items vertically in the center */
@@ -24,30 +25,37 @@
     font-size: calc(10px + 2vmin);
     color: white;
 }
+
 .input-bar {
     background-color: #151b24;
     padding: 1%;
     position: sticky;
     width: 98%;
+    min-height: 11vh;
+    max-height: 11vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 .input-bar-textbox {
     flex-grow: 1;
-    padding: 10px;
+    padding: 15px 10px;
     border-radius: 15px;
+    background-color: #f0f0f0; /* Light gray background */
+    transition: all 0.3s ease;
 }
-.input-bar-button {
-    padding: 10px;
-    margin-right: 10px;
-    border-radius: 15px;
+.input-bar-textbox:hover{
+    transform: scale(1.005); /* Slightly enlarge the textbox on focus */
+}
+.input-bar-textbox:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: #007acc; /* Change border color on focus */
+    background-color: #fff; /* Brighten background on focus */
 }
 .input-bar-counter {
     margin-left: 10px;
     border-radius: 15px;
 }
-
 
 .chat {
     display: flex;
@@ -87,6 +95,36 @@
     color: white; /* White text color */
 }
 
+
+.button {
+    background-color: #151b24; /* Dark background to match the app's theme */
+    color: white; /* White text for contrast */
+    padding: 10px 20px; /* Add padding for a comfortable click area */
+    border: 2px solid white; /* Add a blue border for a subtle highlight */
+    font-size: calc(10px + 1vmin); /* Responsive font size */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 15px;
+}
+.button:hover {
+    background-color: #09f; /* Change background to blue on hover */
+    color: #151b24; /* Change text color to dark for contrast */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+.button:active {
+    transform: scale(0.95); /* Slightly shrink the button when clicked */
+    background-color: #007acc; /* Darker blue for active state */
+}
+.button:disabled {
+    background-color: #444; /* Gray background for disabled state */
+    color: #888; /* Light gray text for disabled state */
+    cursor: not-allowed; /* Show not-allowed cursor for disabled buttons */
+    border: 2px solid #444; /* Match border to background */
+}
+
+
 .App-logos {
     display: flex;
     justify-content: space-evenly;
@@ -101,7 +139,6 @@
 .logo:hover {
     transform: scale(1.1); /* Increase the size by 10% when hovered */
 }
-
 
 
 

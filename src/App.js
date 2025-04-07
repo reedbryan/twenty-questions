@@ -106,13 +106,21 @@ function App() {
         setGameOver(true); // End the game
     };
 
+    const handleFeedback = () => {
+        const feedback = prompt("Please provide your feedback:");
+        if (feedback) {
+            alert("Thank you for your feedback!");
+            // HANDLE FEEDBACK HERE
+        }
+    }
+
     const restartGame = () => {
         sendInitialPrompt(); // Generate a new word
-    }
+    };
 
     // Send the initial "generate a word" prompt when the app loads
     useEffect(() => {
-        sendInitialPrompt();
+        //sendInitialPrompt();
     }, []); // Empty dependency array ensures this runs only once when the component mounts
 
     return (
@@ -161,13 +169,14 @@ function App() {
                     {gameOver ? (
                         // Display restart button when game is over
                         <div>
-                            <button onClick={restartGame}>Restart Game</button>
+                            <button className="button restart" onClick={restartGame}>Restart Game</button>
+                            <button className="button feedback" onClick={handleFeedback}>Give Feedback</button>
                         </div>
                     ) : (
                         // Display input bar components when the game is not over
                         <>
-                            <button className="input-bar-button give-up" onClick={handleGiveUp}>give up</button>
-                            <button className="input-bar-button submit" onClick={handleSubmit}>submit</button>
+                            <button className="button give-up" onClick={handleGiveUp}>give up</button>
+                            <button className="button submit" onClick={handleSubmit}>submit</button>
                             <input
                                 className="input-bar-textbox"
                                 type="text"
