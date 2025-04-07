@@ -107,7 +107,7 @@ function App() {
     };
 
     const restartGame = () => {
-        sendInitialPrompt(); // Generate a new word
+        //sendInitialPrompt(); // Generate a new word
     }
 
     // Send the initial "generate a word" prompt when the app loads
