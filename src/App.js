@@ -146,7 +146,7 @@ function App() {
                                 </div>
                             )}
                             {/* Answer Bubble */}
-                            {entry.question && (
+                            {entry.answer && (
                                 <div className="message-bubble answer">
                                     {entry.answer}
                                 </div>
