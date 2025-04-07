@@ -62,16 +62,22 @@ function App() {
             return;
         }
     
-        const formattedPrompt = formatQuestion(question, currentWord); // Format the prompt
+        // Format the prompt (from prompt.js)
+        const formattedPrompt = formatQuestion(question, currentWord);
 
-        setLoading(true); // Start loading
+        // Add question to log
+        setChatLog((prevLog) => [...prevLog, { question, answer: null }]);
+        // Start loading
+        setLoading(true); 
+
+        // Await response
         try {
             // Fetch the AI response & Update the answer state
             const aiResponse = await fetchAIResponse(formattedPrompt);
 
             // Update question count and log
             setQuestionCount((prevCount) => prevCount - 1); // Increment question count
-            setChatLog((prevLog) => [...prevLog, { question, answer: aiResponse }]); // Add to log
+            setChatLog((prevLog) => [...prevLog, { question: null, answer: aiResponse }]); // Add to log
 
             // Check for a correct guess
             if (aiResponse.toLowerCase().includes(currentWord.toLowerCase())) {
@@ -92,6 +98,11 @@ function App() {
         }
     
         setQuestion(''); // Clear the input field after submission
+    };
+
+    const handleGiveUp = () => {
+        setChatLog((prevLog) => [...prevLog, { question: null, answer: `You gave up! The word was "${currentWord}".` }]); // Add to log
+        setGameOver(true); // End the game
     };
 
     const restartGame = () => {
@@ -151,7 +162,7 @@ function App() {
                 )}
 
                 <div className="input-bar">                    
-                    <button className="input-bar-button give-up">give up</button>
+                    <button className="input-bar-button give-up" onClick={handleGiveUp}>give up</button>
                     <button className="input-bar-button submit" onClick={handleSubmit}>submit</button>
                     <input
                         className="input-bar-textbox"

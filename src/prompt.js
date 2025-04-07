@@ -23,7 +23,7 @@ export const formatInitial = () => {
 
 export const fetchAIResponse = async (formattedPrompt) => {
     try {
-        const response = await fetch('/.netlify/functions/openai', {
+        const response = await fetch('/.netlify/functions/openai', { // call API from serverless function
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
