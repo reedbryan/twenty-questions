@@ -68,7 +68,7 @@
     gap: 5px; /* Add spacing between question and answer */
 }
 .message-bubble {
-    padding: 15px 5px;
+    padding: 15px;
     border-radius: 15px;
     max-width: 70%; /* Limit the width of the bubbles */
     word-wrap: break-word; /* Ensure long text wraps to the next line */
