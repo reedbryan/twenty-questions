@@ -1,6 +1,7 @@
 import git_logo from './logos/logo-github.svg';
 import react_logo from './logos/logo-react.svg';
 import openAI_logo from './logos/logo-openai.svg';
+import netlify_logo from './logos/logo-netlify.svg';
 import './App.css';
 import { useState, useEffect, useRef } from 'react';
 import { formatQuestion, formatInitial, fetchAIResponse } from './prompt.js';
@@ -142,6 +143,9 @@ function App() {
                     </a>
                     <a href="https://openai.com" target="_blank" rel="noopener noreferrer">
                         <img src={openAI_logo} className="logo" alt="OpenAI Logo" />
+                    </a>
+                    <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer">
+                        <img src={netlify_logo} className="logo" alt="Netlify Logo" />
                     </a>
                 </div>
 

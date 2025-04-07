@@ -130,7 +130,7 @@
 .App-logos {
     display: flex;
     justify-content: space-evenly;
-    gap: 10px;
+    gap: 20px;
     align-items: center;
 }
 .logo {
