@@ -68,7 +68,7 @@
     gap: 5px; /* Add spacing between question and answer */
 }
 .message-bubble {
-    padding: 10px 15px;
+    padding: 15px 5px;
     border-radius: 15px;
     max-width: 70%; /* Limit the width of the bubbles */
     word-wrap: break-word; /* Ensure long text wraps to the next line */
@@ -76,11 +76,13 @@
 }
 .message-bubble.question {
     align-self: flex-end; /* Align question bubbles to the left */
+    margin-right: 10px;
     background-color: #f0f0f0; /* Light gray background for questions */
     color: #333; /* Dark text color */
 }
 .message-bubble.answer {
     align-self: flex-start; /* Align answer bubbles to the right */
+    margin-left: 10px;
     background-color: #151b24; /* Blue background for answers */
     color: white; /* White text color */
 }
