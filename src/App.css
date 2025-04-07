@@ -51,9 +51,11 @@
 
 .chat {
     display: flex;
-    padding: 50px;
-    min-height: 65vh;
-    max-height: 65vh;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    min-height: 60vh;
+    max-height: 60vh;
+    width: 100%;
     overflow-y: auto; /* Make the chat scrollable when content overflows */
     flex-direction: column; /* Stack messages vertically */
     gap: 10px; /* Add spacing between messages */
