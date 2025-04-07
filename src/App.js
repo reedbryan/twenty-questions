@@ -49,7 +49,10 @@ function App() {
             console.log("Generated word: " + aiResponse);
         } catch (error) {
             console.error('Error:', error);
-            alert('Failed to fetch response from the server.');
+            // Handle the error
+            setChatLog([{ question: null, answer: "Failed to start the game. Please try again." }]);
+            setGameOver(true); // Set gameOver to true to allow the user to retry
+            alert('Failed to generate a word. Please check your connection and click "Restart Game" to try again.');
         } finally {
             setLoading(false); // Stop loading
         }
@@ -115,6 +118,7 @@ function App() {
     }
 
     const restartGame = () => {
+        setChatLog([]); // Clear chat log
         sendInitialPrompt(); // Generate a new word
     };
 
@@ -127,7 +131,7 @@ function App() {
         <div className="App">
             <header className="App-header">                
 
-                <h1>20 QUESTIONS ONLINE</h1>
+                <h2>20 QUESTIONS ONLINE</h2>
                 
                 <div className="App-logos">
                     <a href="https://github.com/reedbryan/twenty-questions" target="_blank" rel="noopener noreferrer">
@@ -175,8 +179,16 @@ function App() {
                     ) : (
                         // Display input bar components when the game is not over
                         <>
-                            <button className="button give-up" onClick={handleGiveUp}>give up</button>
-                            <button className="button submit" onClick={handleSubmit}>submit</button>
+                            <button 
+                                className="button give-up" 
+                                onClick={handleGiveUp}
+                                disabled={loading} // Disable the button while loading is true
+                            >give up</button>
+                            <button 
+                                className="button submit" 
+                                onClick={handleSubmit}
+                                disabled={loading} // Disable the button while loading is true
+                            >submit</button>
                             <input
                                 className="input-bar-textbox"
                                 type="text"
