@@ -87,6 +87,7 @@ function App() {
             // Check for 20 questions asked
             if (questionCount <= 0) {
                 console.log("Game over, 20 questions asked");
+                setChatLog((prevLog) => [...prevLog, { question: null, answer: `You've asked 20 questions, game over! The word was "${currentWord}".` }]); // Add to log
                 setGameOver(true); // Set gameOver to true
             }
 
@@ -158,7 +159,6 @@ function App() {
 
                 {gameOver && ( // Display restart button when game is over
                     <div>
-                        <p>Game Over! The word was "{currentWord}".</p>
                         <button onClick={restartGame}>Restart Game</button>
                     </div>
                 )}
