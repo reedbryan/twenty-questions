@@ -120,7 +120,7 @@ function App() {
 
     // Send the initial "generate a word" prompt when the app loads
     useEffect(() => {
-        //sendInitialPrompt();
+        sendInitialPrompt();
     }, []); // Empty dependency array ensures this runs only once when the component mounts
 
     return (
