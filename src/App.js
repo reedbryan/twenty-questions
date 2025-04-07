@@ -142,13 +142,15 @@ function App() {
                             {/* Question Bubble */}
                             {entry.question && (
                                 <div className="message-bubble question">
-                                    <strong>Q:</strong> {entry.question}
+                                    {entry.question}
                                 </div>
                             )}
                             {/* Answer Bubble */}
-                            <div className="message-bubble answer">
-                                <strong>A:</strong> {entry.answer}
-                            </div>
+                            {entry.question && (
+                                <div className="message-bubble answer">
+                                    {entry.answer}
+                                </div>
+                            )}
                         </div>
                     ))}
                     <div className='loading-message'>{loading && <p>Thinking...</p>}</div>
