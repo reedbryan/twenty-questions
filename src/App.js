@@ -42,6 +42,7 @@ function App() {
             setCurrentWord(aiResponse);
             setChatLog([{ question: null, answer: `I've thought of a word. Ask me yes or no questions to try and guess it.
 
+                
 Examples:
 • Is it a living thing?
 • Is it bigger than a car?
