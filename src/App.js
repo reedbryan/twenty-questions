@@ -33,6 +33,30 @@ function App() {
         
         const formattedPrompt = formatInitial(); // Format the initial prompt
 
+        // List of example questions
+        const exampleQuestions = [
+            "Is it a living thing?",
+            "Is it bigger than a car?",
+            "Can you find it in a house?",
+            "Is it made of metal?",
+            "Can you eat it?",
+            "Is it used for transportation?",
+            "Does it have wheels?",
+            "Is it electronic?",
+            "Can you hold it in your hand?",
+            "Is it found outdoors?",
+            "Does it make noise?",
+            "Is it soft?",
+            "Is it colorful?",
+            "Do people wear it?",
+            "Is it used for work?",
+            "Can it fly?",
+            "Is it hot?",
+            "Does it have moving parts?",
+            "Is it found in nature?",
+            "Can you sit on it?"
+        ];
+
         setLoading(true); // Start loading
         try {
             // Fetch the AI response
@@ -48,10 +72,9 @@ function App() {
                             I've thought of a word. Ask me yes or no questions to try and guess it.
                         </div>
                         <div className="examples-list">
-                            • Is it a living thing?<br/>
-                            • Is it bigger than a car?<br/>
-                            • Can you find it in a house?<br/>
-                            • Is it made of metal?
+                            Examples:<br/>
+                            • {exampleQuestions[0]}<br/>
+                            • {exampleQuestions[1]}
                         </div>
                     </div>
                 )
@@ -63,6 +86,7 @@ function App() {
             
             // DEBUG
             console.log("Generated word: " + aiResponse);
+
         } catch (error) {
             console.error('Error:', error);
             // Handle the error
