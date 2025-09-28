@@ -91,6 +91,7 @@
     color: #333; /* Dark text color */
 }
 .message-bubble.answer {
+    white-space: pre-line; /* Preserve line breaks and spaces */
     align-self: flex-start; /* Align answer bubbles to the right */
     margin-left: 10px;
     background-color: #151b24; /* Blue background for answers */
