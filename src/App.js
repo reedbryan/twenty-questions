@@ -40,8 +40,8 @@ function App() {
             
             // Update currentWord state with the generated word & Initialize chatLog as an array
             setCurrentWord(aiResponse);
-            setChatLog([{ question: null, answer: "I've thought of a word. UGGGG Ask me questions to try and guess it." }]);
-            
+            setChatLog([{ question: null, answer: "I've thought of a word. Ask me questions to try and guess it.\n - Example: Is it a living thing?" }]);
+
             // Reset states
             setQuestionCount(20); 
             setGameOver(false);
