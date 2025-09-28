@@ -98,6 +98,16 @@
     color: white; /* White text color */
 }
 
+/* Intro prompt styles */
+.intro-text {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.examples-list {
+    text-align: left;
+    line-height: 1.4;
+}
+
 
 .button {
     background-color: #151b24; /* Dark background to match the app's theme */
