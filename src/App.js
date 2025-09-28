@@ -40,7 +40,13 @@ function App() {
             
             // Update currentWord state with the generated word & Initialize chatLog as an array
             setCurrentWord(aiResponse);
-            setChatLog([{ question: null, answer: "I've thought of a word. Ask me questions to try and guess it.\n - Example: Is it a living thing?" }]);
+            setChatLog([{ question: null, answer: `I've thought of a word. Ask me questions to try and guess it.
+
+Examples:
+• Is it a living thing?
+• Is it bigger than a car?
+• Can you find it in a house?
+• Is it made of metal?`  }]);
 
             // Reset states
             setQuestionCount(20); 
