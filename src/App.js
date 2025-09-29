@@ -56,6 +56,12 @@ function App() {
             "Is it found in nature?",
             "Can you sit on it?"
         ];
+        // Function to randomly select two examples
+        const getRandomExamples = (examples, count = 2) => {
+            const shuffled = [...examples].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        };
+        const randomExamples = getRandomExamples(exampleQuestions);
 
         setLoading(true); // Start loading
         try {
@@ -73,8 +79,8 @@ function App() {
                         </div>
                         <div className="examples-list">
                             Examples:<br/>
-                            • {exampleQuestions[0]}<br/>
-                            • {exampleQuestions[1]}
+                            • {randomExamples[0]}<br/>
+                            • {randomExamples[1]}
                         </div>
                     </div>
                 )
